@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoApp from './TodoApp.jsx';
+import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 
 const meals = {
   'Breakfast - Pierce Dining Hall': 7.1690000000000005,
@@ -26,9 +27,9 @@ const plans = {
 export default class App extends React.Component {
   render() {
     return (
-     <div style={{textAlign: 'center'}}>
-        <h1>Hello World</h1>
-        <TodoApp/>
+     <div>
+         <PageHeader>Stevens Meal Plans<small>A data visualization</small></PageHeader>
+         
       </div>);
   }
 }
