@@ -11,6 +11,9 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const DashboardPluginConfig = new DashboardPlugin();
+
 module.exports = {
   entry: './client/index.js',
   output: {
@@ -23,5 +26,8 @@ module.exports = {
           { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: [
+        HtmlWebpackPluginConfig,
+        DashboardPluginConfig
+    ]
 }
