@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Title = () => {
+const Title = ({todoCount}) => {
   return (
     <div>
        <div>
-          <h1>to-do</h1>
+          <h1>to-do ({todoCount})</h1>
        </div>
     </div>
   );
@@ -54,6 +54,16 @@ export default class TodoApp extends React.Component{
       data: []
     }
   }
+  // Lifecycle method
+  componentDidMount(){
+    // Log component mount
+    console.log("TodoApp mounted");
+    /*
+    This can be a good place to make an API call,
+    then use this.setState({stateObj}); to fill the state
+    with data upon arrival
+    */
+  }
   // Add todo handler
   addTodo(val){
     // Assemble data
@@ -77,7 +87,7 @@ export default class TodoApp extends React.Component{
     // Render JSX
     return (
       <div>
-        <Title />
+        <Title todoCount={this.state.data.length}/>
         <TodoForm addTodo={this.addTodo.bind(this)}/>
         <TodoList
           todos={this.state.data}
