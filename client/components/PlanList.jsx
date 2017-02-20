@@ -23,17 +23,16 @@ export default class PlanList extends React.Component {
 
         let planList = [];
         for(let p in planData){
-            console.log(planData[p]);
+            //console.log(planData[p]);
             planList.push(planData[p]);
         }
 
         return (
             <div>
                 {planList.map( (plan, index) => (
-                    <PlanCard planObj={plan} ind={index}/>
+                    <PlanCard planObj={plan} ind={index} key={index}/>
                 ))}
                 <hr/>
-                <pre>{JSON.stringify(this.state.data, null, 2)}</pre>
             </div>
         )
     }

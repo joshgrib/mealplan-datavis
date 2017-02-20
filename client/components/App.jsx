@@ -7,10 +7,22 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+
+
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
 import PlanList from './PlanList.jsx';
+import MealList from './MealList.jsx';
+import TableExampleComplex from './DataTable.jsx';
+
+const muiTheme = getMuiTheme({
+    palette:{
+
+    }
+})
 
 export default class App extends React.Component {
   render() {
@@ -22,6 +34,8 @@ export default class App extends React.Component {
                     iconElementRight={<IconButton iconClassName="fa fa-github"/>}
                 />
                 <PlanList/>
+                <MealList/>
+                <TableExampleComplex/>
             </div>
         </MuiThemeProvider>
     );
