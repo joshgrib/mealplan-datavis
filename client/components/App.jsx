@@ -8,8 +8,6 @@ injectTapEventPlugin();
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -25,21 +23,47 @@ const muiTheme = getMuiTheme({
 })
 
 export default class App extends React.Component {
-  render() {
-    return (
-        <MuiThemeProvider>
-            <div>
-                <AppBar
-                    title="Stevens Meal Plans Breakdown"
-                    iconElementRight={<IconButton iconClassName="fa fa-github"/>}
-                />
-                <PlanList/>
-                <MealList/>
-                <TableExampleComplex/>
-            </div>
-        </MuiThemeProvider>
-    );
-  }
+    constructor(){
+        super();
+        this._handleClick = this._hanndleClick.bind(this);
+    }
+    getChildContext(){
+        return {
+            muiTheme: ThemeManager.getCurrentTheme()
+        };
+    }
+    _handleClick(e){
+        e.preventDefault();
+        //show/hide LeftMenu
+        this.refs.leftNav.toggle();
+    }
+    render() {
+        let menuItems = [
+            {route:'mealplans', text:'Meal Plans'},
+            {route:'locations', text:'Locations & Meals'},
+            {}
+        ]
+        return (
+            <MuiThemeProvider>
+                <div>
+                    <AppBar
+                        title="Stevens Meal Plans Breakdown"
+                        iconElementRight={
+                            <IconButton
+                                iconClassName="fa fa-github"
+                                onClick={console.log("gh click")}
+                                />
+                        }
+                        onLeftIconButtonTouchTap={console.log("Left button")}
+                        onRightIconButtonTouchTap={console.log("Right button")}
+                    />
+                    <PlanList/>
+                    <MealList/>
+                    <TableExampleComplex/>
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 var meals = {
