@@ -1,67 +1,24 @@
 import React from 'react';
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-
-import PlanList from './PlanList.jsx';
-import MealList from './MealList.jsx';
-import TableExampleComplex from './DataTable.jsx';
-
-const muiTheme = getMuiTheme({
-    palette:{
-
-    }
-})
+import ReactDOM from 'react-dom';
 
 export default class App extends React.Component {
-    constructor(){
-        super();
-        this._handleClick = this._hanndleClick.bind(this);
-    }
-    getChildContext(){
-        return {
-            muiTheme: ThemeManager.getCurrentTheme()
-        };
-    }
-    _handleClick(e){
-        e.preventDefault();
-        //show/hide LeftMenu
-        this.refs.leftNav.toggle();
-    }
     render() {
-        let menuItems = [
-            {route:'mealplans', text:'Meal Plans'},
-            {route:'locations', text:'Locations & Meals'},
-            {}
-        ]
         return (
-            <MuiThemeProvider>
-                <div>
-                    <AppBar
-                        title="Stevens Meal Plans Breakdown"
-                        iconElementRight={
-                            <IconButton
-                                iconClassName="fa fa-github"
-                                onClick={console.log("gh click")}
-                                />
-                        }
-                        onLeftIconButtonTouchTap={console.log("Left button")}
-                        onRightIconButtonTouchTap={console.log("Right button")}
-                    />
-                    <PlanList/>
-                    <MealList/>
-                    <TableExampleComplex/>
-                </div>
-            </MuiThemeProvider>
+            <div id="joshApp">
+                <header>
+                    <h1>Stevens Meal Plans</h1>
+                    <h2>Which one is best for you?</h2>
+                </header>
+                <nav>
+                    <li>
+                        <a href="#">Home</a>
+                        <a href="#">Meal plans</a>
+                        <a href="#">Meal options</a>
+                        <a href="#">Cost VS Value</a>
+                    </li>
+                </nav>
+                <section></section>
+            </div>
         );
     }
 }
