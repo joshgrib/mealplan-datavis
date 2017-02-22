@@ -6,7 +6,6 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Table } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
-
 //import { TodoApp } from './TodoApp.jsx';
 
 const AppHeader = ({main, sub, clickFn}) => {
@@ -82,7 +81,7 @@ const PlanTable = ({planData}) => {
 
     return (
         <section id="mealPlanTable">
-            <p>*All meal plans have Washington Street Wednesday and can include 0, 100, or 300 Duckbills.</p>
+            <p>All meal plans have Washington Street Wednesday and can include 0, 100, or 300 Duckbills.</p>
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
@@ -210,13 +209,57 @@ const CostValueSideBar = ({planData, mealData}) => {
             <h4>Meal Plans</h4>
             <PlanTable planData={planData}/>
 
-            <h4>Maximum Values</h4>
+            <h4>Maximum Value Meals</h4>
             <MealTable mealData={mealData}/>
         </section>
     );
 }
 
-const ValueChart = ({ title, planData, mealData, updateUsage, updateGuests, updateUnlimited, updateTax, updateWeeks, stateStatus}) => {
+const ValueTable = ({planList, mealList, stateStatus}) => {
+    return (
+        <Table bordered hover responsive>
+            <thead>
+                <tr>
+                    <th>Meal</th>
+                    {planList.map((plan, i) => {
+                        return (
+                            <th key={`plan_${i}`}>
+                                {plan.name}<br/>
+                                {`$${plan.value}`}
+                            </th>
+                        );
+                    })}
+                </tr>
+            </thead>
+            <tbody>
+                {mealList.map((meal, i) => {
+                    let mealName = `${meal.name} at ${meal.location}`;
+                    let mealPrice = (meal.price*stateStatus.tax).toFixed(2);
+                    return (
+                        <tr key={`meal_${i}`}>
+                            <th>{mealName} {meal.type}: {`$${mealPrice}`}
+                            </th>
+                            {planList.map((plan, j) => {
+                                let swipePrice = plan.value;
+                                let savings = mealPrice - swipePrice;
+                                let colorClass = savings>0?'bg-success':'bg-danger';
+                                return (
+                                    <td
+                                        key={`meal_${i}|plan_${j}`}
+                                        className={colorClass}>
+                                        {`$${savings.toFixed(2)}`}
+                                    </td>
+                                );
+                            })}
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </Table>
+    );
+}
+
+const ValueChartTool = ({ title, planData, mealData, updateUsage, updateGuests, updateUnlimited, updateTax, updateWeeks, stateStatus}) => {
     let planList = [];
     for(let p in planData){
         let planObj = planData[p];
@@ -240,53 +283,96 @@ const ValueChart = ({ title, planData, mealData, updateUsage, updateGuests, upda
     let mealList = [];
     for(let m in mealData){
         let mealObj = mealData[m];
-        console.log(mealObj);
+        let maxMealPrice = 0;
+        let minMealPrice = 0;
+
+        for(let c in mealObj.categories){
+            let items = mealObj.categories[c].items;
+            let maxPrice = parseFloat(items[0].price);
+            let minPrice = parseFloat(items[0].price);
+
+            for(let i in items){
+                let item = items[i];
+                let p = parseFloat(item.price);
+                if(p < minPrice){
+                    minPrice = p;
+                }
+                if(p > maxPrice){
+                    maxPrice = p;
+                }
+            }
+            maxMealPrice += maxPrice;
+            minMealPrice += minPrice;
+        }
+        let minMaxEqual = (maxMealPrice == minMealPrice);
+
+        mealList.push({
+            'name':mealObj.name,
+            'location':mealObj.location,
+            'type':minMaxEqual? '' : 'Max',
+            'price':maxMealPrice
+        });
+        if(!minMaxEqual){
+            mealList.push({
+                'name':mealObj.name,
+                'location':mealObj.location,
+                'type':'Min',
+                'price':minMealPrice
+            });
+        }
     }
+    console.log(mealList);
     return (
         <section id="valueChart">
-            <header>{title}</header>
-            <pre>{JSON.stringify(stateStatus, null, 2)}</pre>
-            <Form>
-                <FormGroup>
-                    Usage:<br/>
-                    <InputGroup>
-                        <Input type="number" name="usage" id="usage"
-                            defaultValue={stateStatus.swipe_usage * 100}
-                            onChange={updateUsage}
-                            min={0} max={100} step={1}/>
-                        <InputGroupAddon>% general swipe usage</InputGroupAddon>
-                    </InputGroup>
-                    <InputGroup>
-                        <Input type="number" name="guests" id="guests"
-                            defaultValue={stateStatus.guest_usage * 100}
-                            onChange={updateGuests}
-                            min={0} max={100} step={1}/>
-                        <InputGroupAddon>% guest swipe usage</InputGroupAddon>
-                    </InputGroup>
-                    <InputGroup>
-                        <Input type="number" name="unlim" id="unlim"
-                            defaultValue={stateStatus.unlimited}
-                            onChange={updateUnlimited}
-                            min={0} step={1}/>
-                        <InputGroupAddon>swipes per week over 21</InputGroupAddon>
-                    </InputGroup>
-                    <InputGroup>
-                        <Input type="number" name="tax" id="tax"
-                            defaultValue={parseInt((stateStatus.tax-1)*100)}
-                            onChange={updateTax}
-                            min={0} step={1}/>
-                        <InputGroupAddon>% tax</InputGroupAddon>
-                    </InputGroup>
-                    <InputGroup>
-                        <Input type="number" name="weeks" id="weeks"
-                            defaultValue={stateStatus.semester_weeks}
-                            onChange={updateWeeks}
-                            min={0} max={26} step={1}/>
-                        <InputGroupAddon>weeks in the semester</InputGroupAddon>
-                    </InputGroup>
-                </FormGroup>
-            </Form>
-            <div></div>
+            <header>
+                <h3>{title}</h3>
+            </header>
+            <h4>Change the settings here</h4>
+            <Col sm={6}>
+                <Form sm={6}>
+                    <FormGroup>
+                        <InputGroup>
+                            <InputGroupAddon>% general swipe usage</InputGroupAddon>
+                            <Input type="number" name="usage" id="usage"
+                                defaultValue={stateStatus.swipe_usage * 100}
+                                onChange={updateUsage}
+                                min={0} max={100} step={1}/>
+                        </InputGroup>
+                        <InputGroup>
+                            <InputGroupAddon>% guest swipe usage</InputGroupAddon>
+                            <Input type="number" name="guests" id="guests"
+                                defaultValue={stateStatus.guest_usage * 100}
+                                onChange={updateGuests}
+                                min={0} max={100} step={1}/>
+                        </InputGroup>
+                        <InputGroup>
+                            <InputGroupAddon>swipes per week over 21</InputGroupAddon>
+                            <Input type="number" name="unlim" id="unlim"
+                                defaultValue={stateStatus.unlimited}
+                                onChange={updateUnlimited}
+                                min={0} step={1}/>
+                        </InputGroup>
+                        <InputGroup>
+                            <InputGroupAddon>% tax</InputGroupAddon>
+                            <Input type="number" name="tax" id="tax"
+                                defaultValue={parseInt((stateStatus.tax-1)*100)}
+                                onChange={updateTax}
+                                min={0} step={1}/>
+                        </InputGroup>
+                        <InputGroup>
+                            <InputGroupAddon>weeks in the semester</InputGroupAddon>
+                            <Input type="number" name="weeks" id="weeks"
+                                defaultValue={stateStatus.semester_weeks}
+                                onChange={updateWeeks}
+                                min={0} max={26} step={1}/>
+                        </InputGroup>
+                    </FormGroup>
+                </Form>
+            </Col>
+            <Col sm={12}>
+                <h4>See what meals save you money here</h4>
+                <ValueTable planList={planList} mealList={mealList} stateStatus={stateStatus}/>
+            </Col>
         </section>
     );
 }
@@ -325,7 +411,7 @@ export default class App extends React.Component {
         this.changeStateVal('guest_usage', parseFloat(newVal/100));
     }
     updateUnlimited(e) {
-        let newVal = e.target.value;
+        let newVal = e.target.value * this.state.semester_weeks;
         this.changeStateVal('unlimited', parseFloat(newVal));
     }
     updateTax(e) {
@@ -346,13 +432,8 @@ export default class App extends React.Component {
                             sub="Which one is best for you?"/>
                     </Row>
                     <Row id="joshMain">
-                        <Col>
-                            <CostValueSideBar
-                                planData={pData}
-                                mealData={mData}/>
-                        </Col>
-                        <Col>
-                            <ValueChart
+                        <Col sm={12}>
+                            <ValueChartTool
                                 title="Meal plan value chart"
                                 planData={pData}
                                 mealData={mData}
@@ -363,6 +444,11 @@ export default class App extends React.Component {
                                 updateWeeks={this.updateWeeks.bind(this)}
                                 stateStatus={this.state}
                                 />
+                        </Col>
+                        <Col sm={12}>
+                            <CostValueSideBar
+                                planData={pData}
+                                mealData={mData}/>
                         </Col>
                     </Row>
                 </Container>
