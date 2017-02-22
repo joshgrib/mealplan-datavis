@@ -18922,75 +18922,136 @@ var ValueChartTool = function ValueChartTool(_ref9) {
             _reactstrap.Col,
             { sm: 6 },
             _react2.default.createElement(
-                _reactstrap.Form,
+                _reactstrap.Container,
                 null,
                 _react2.default.createElement(
-                    _reactstrap.FormGroup,
+                    _reactstrap.Row,
                     null,
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
-                        _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
-                            null,
-                            '% general swipe usage'
-                        ),
-                        _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'usage', id: 'usage',
-                            defaultValue: stateStatus.swipe_usage * 100,
-                            onChange: updateUsage,
-                            min: 0, max: 100, step: 1 })
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        'Normal swipes used'
                     ),
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
+                        _reactstrap.Col,
+                        { sm: 6 },
                         _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
+                            _reactstrap.InputGroup,
                             null,
-                            '% guest swipe usage'
-                        ),
-                        _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'guests', id: 'guests',
-                            defaultValue: stateStatus.guest_usage * 100,
-                            onChange: updateGuests,
-                            min: 0, max: 100, step: 1 })
+                            _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'usage', id: 'usage',
+                                defaultValue: stateStatus.swipe_usage * 100,
+                                onChange: updateUsage,
+                                min: 0, max: 100, step: 1 }),
+                            _react2.default.createElement(
+                                _reactstrap.InputGroupAddon,
+                                null,
+                                '%'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Row,
+                    null,
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        'Guest swipes used'
                     ),
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
+                        _reactstrap.Col,
+                        { sm: 6 },
                         _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
+                            _reactstrap.InputGroup,
                             null,
-                            'swipes per week over 21'
-                        ),
-                        _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'unlim', id: 'unlim',
-                            defaultValue: stateStatus.unlimited,
-                            onChange: updateUnlimited,
-                            min: 0, step: 1 })
+                            _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'guests', id: 'guests',
+                                defaultValue: stateStatus.guest_usage * 100,
+                                onChange: updateGuests,
+                                min: 0, max: 100, step: 1 }),
+                            _react2.default.createElement(
+                                _reactstrap.InputGroupAddon,
+                                null,
+                                '%'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Row,
+                    null,
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        'Swipes per week over 21(3/day)'
                     ),
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
+                        _reactstrap.Col,
+                        { sm: 6 },
                         _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
+                            _reactstrap.InputGroup,
                             null,
-                            '% tax'
-                        ),
-                        _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'tax', id: 'tax',
-                            defaultValue: parseInt((stateStatus.tax - 1) * 100),
-                            onChange: updateTax,
-                            min: 0, step: 1 })
+                            _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'unlim', id: 'unlim',
+                                defaultValue: stateStatus.unlimited,
+                                onChange: updateUnlimited,
+                                min: 0, step: 1 }),
+                            _react2.default.createElement(
+                                _reactstrap.InputGroupAddon,
+                                null,
+                                'per week'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Row,
+                    null,
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        'Tax rate is'
                     ),
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
+                        _reactstrap.Col,
+                        { sm: 6 },
                         _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
+                            _reactstrap.InputGroup,
                             null,
-                            'weeks in the semester'
-                        ),
-                        _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'weeks', id: 'weeks',
-                            defaultValue: stateStatus.semester_weeks,
-                            onChange: updateWeeks,
-                            min: 0, max: 26, step: 1 })
+                            _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'tax', id: 'tax',
+                                defaultValue: parseInt((stateStatus.tax - 1) * 100),
+                                onChange: updateTax,
+                                min: 0, step: 1 }),
+                            _react2.default.createElement(
+                                _reactstrap.InputGroupAddon,
+                                null,
+                                '%'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Row,
+                    null,
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        'Weeks in the semester'
+                    ),
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { sm: 6 },
+                        _react2.default.createElement(
+                            _reactstrap.InputGroup,
+                            null,
+                            _react2.default.createElement(_reactstrap.Input, { type: 'number', name: 'weeks', id: 'weeks',
+                                defaultValue: stateStatus.semester_weeks,
+                                onChange: updateWeeks,
+                                min: 0, max: 26, step: 1 }),
+                            _react2.default.createElement(
+                                _reactstrap.InputGroupAddon,
+                                null,
+                                'weeks'
+                            )
+                        )
                     )
                 )
             )

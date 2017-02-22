@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Container, Row, Col } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Table } from 'reactstrap';
-import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { Card, CardBlock, CardTitle, CardText } from 'reactstrap';
 
 //import { TodoApp } from './TodoApp.jsx';
@@ -333,45 +333,68 @@ const ValueChartTool = ({title, planData, mealData, updateUsage, updateGuests, u
             </header>
             <h4>Change the settings here</h4>
             <Col sm={6}>
-                <Form>
-                    <FormGroup>
-                        <InputGroup>
-                            <InputGroupAddon>% general swipe usage</InputGroupAddon>
-                            <Input type="number" name="usage" id="usage"
+                <Container>
+                    <Row>
+                        <Col sm={6}>Normal swipes used</Col>
+                        <Col sm={6}>
+                            <InputGroup>
+                                <Input type="number" name="usage" id="usage"
                                 defaultValue={stateStatus.swipe_usage * 100}
                                 onChange={updateUsage}
                                 min={0} max={100} step={1}/>
-                        </InputGroup>
-                        <InputGroup>
-                            <InputGroupAddon>% guest swipe usage</InputGroupAddon>
-                            <Input type="number" name="guests" id="guests"
-                                defaultValue={stateStatus.guest_usage * 100}
-                                onChange={updateGuests}
-                                min={0} max={100} step={1}/>
-                        </InputGroup>
-                        <InputGroup>
-                            <InputGroupAddon>swipes per week over 21</InputGroupAddon>
-                            <Input type="number" name="unlim" id="unlim"
-                                defaultValue={stateStatus.unlimited}
-                                onChange={updateUnlimited}
-                                min={0} step={1}/>
-                        </InputGroup>
-                        <InputGroup>
-                            <InputGroupAddon>% tax</InputGroupAddon>
-                            <Input type="number" name="tax" id="tax"
-                                defaultValue={parseInt((stateStatus.tax-1)*100)}
-                                onChange={updateTax}
-                                min={0} step={1}/>
-                        </InputGroup>
-                        <InputGroup>
-                            <InputGroupAddon>weeks in the semester</InputGroupAddon>
-                            <Input type="number" name="weeks" id="weeks"
-                                defaultValue={stateStatus.semester_weeks}
-                                onChange={updateWeeks}
-                                min={0} max={26} step={1}/>
-                        </InputGroup>
-                    </FormGroup>
-                </Form>
+                                <InputGroupAddon>%</InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>Guest swipes used</Col>
+                        <Col sm={6}>
+                            <InputGroup>
+                                <Input type="number" name="guests" id="guests"
+                                    defaultValue={stateStatus.guest_usage * 100}
+                                    onChange={updateGuests}
+                                    min={0} max={100} step={1}/>
+                                <InputGroupAddon>%</InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>Swipes per week over 21(3/day)</Col>
+                        <Col sm={6}>
+                            <InputGroup>
+                                <Input type="number" name="unlim" id="unlim"
+                                    defaultValue={stateStatus.unlimited}
+                                    onChange={updateUnlimited}
+                                    min={0} step={1}/>
+                                <InputGroupAddon>per week</InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>Tax rate is</Col>
+                        <Col sm={6}>
+                            <InputGroup>
+                                <Input type="number" name="tax" id="tax"
+                                    defaultValue={parseInt((stateStatus.tax-1)*100)}
+                                    onChange={updateTax}
+                                    min={0} step={1}/>
+                                <InputGroupAddon>%</InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>Weeks in the semester</Col>
+                        <Col sm={6}>
+                            <InputGroup>
+                                <Input type="number" name="weeks" id="weeks"
+                                    defaultValue={stateStatus.semester_weeks}
+                                    onChange={updateWeeks}
+                                    min={0} max={26} step={1}/>
+                                <InputGroupAddon>weeks</InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                </Container>
             </Col>
             <Col sm={12}>
                 <h4>See where you save and lose money here</h4>
