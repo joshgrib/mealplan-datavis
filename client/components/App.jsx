@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Table } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Card, CardBlock, CardTitle, CardText } from 'reactstrap';
 
 //import { TodoApp } from './TodoApp.jsx';
 
@@ -199,7 +200,7 @@ const MealTable = ({mealData}) => {
     );
 }
 
-const CostValueSideBar = ({planData, mealData}) => {
+const SideBar = ({planData, mealData}) => {
     return (
         <section>
             <header>
@@ -217,10 +218,10 @@ const CostValueSideBar = ({planData, mealData}) => {
 
 const ValueTable = ({planList, mealList, stateStatus}) => {
     return (
-        <Table bordered hover responsive>
+        <Table bordered hover responsive className="table-condensed">
             <thead>
                 <tr>
-                    <th>Meal</th>
+                    <th></th>
                     {planList.map((plan, i) => {
                         return (
                             <th key={`plan_${i}`}>
@@ -242,12 +243,16 @@ const ValueTable = ({planList, mealList, stateStatus}) => {
                             {planList.map((plan, j) => {
                                 let swipePrice = plan.value;
                                 let savings = mealPrice - swipePrice;
-                                let colorClass = savings>0?'bg-success':'bg-danger';
+                                let isPos = savings>0;
+                                let cellValue = `$${savings.toFixed(2)}`;
+                                if(isPos){
+                                    cellValue = <strong>{cellValue}</strong>
+                                }
                                 return (
                                     <td
                                         key={`meal_${i}|plan_${j}`}
-                                        className={colorClass}>
-                                        {`$${savings.toFixed(2)}`}
+                                        className={isPos?'success':'danger'}>
+                                        {cellValue}
                                     </td>
                                 );
                             })}
@@ -259,7 +264,7 @@ const ValueTable = ({planList, mealList, stateStatus}) => {
     );
 }
 
-const ValueChartTool = ({ title, planData, mealData, updateUsage, updateGuests, updateUnlimited, updateTax, updateWeeks, stateStatus}) => {
+const ValueChartTool = ({title, planData, mealData, updateUsage, updateGuests, updateUnlimited, updateTax, updateWeeks, stateStatus}) => {
     let planList = [];
     for(let p in planData){
         let planObj = planData[p];
@@ -321,7 +326,6 @@ const ValueChartTool = ({ title, planData, mealData, updateUsage, updateGuests, 
             });
         }
     }
-    console.log(mealList);
     return (
         <section id="valueChart">
             <header>
@@ -329,7 +333,7 @@ const ValueChartTool = ({ title, planData, mealData, updateUsage, updateGuests, 
             </header>
             <h4>Change the settings here</h4>
             <Col sm={6}>
-                <Form sm={6}>
+                <Form>
                     <FormGroup>
                         <InputGroup>
                             <InputGroupAddon>% general swipe usage</InputGroupAddon>
@@ -370,8 +374,18 @@ const ValueChartTool = ({ title, planData, mealData, updateUsage, updateGuests, 
                 </Form>
             </Col>
             <Col sm={12}>
-                <h4>See what meals save you money here</h4>
+                <h4>See where you save and lose money here</h4>
                 <ValueTable planList={planList} mealList={mealList} stateStatus={stateStatus}/>
+                <Card>
+                    <CardBlock>
+                        <CardTitle>Math</CardTitle>
+                        <ul>
+                            <li>Meal max and min prices are calculated by combining items to get the greatest and least cost respectively, and adding tax.</li>
+                            <li>Meal plan prices are calculated as total_swipes/plan_cost, where total swipes is the sum of normal and guest swipes, adjusting for usage and extra unlimited swipes. </li>
+                            <li>Cell values are calculated by taking the cost of the meal normally and subtracted the cost of the swipe used for the meal, to get the amount saved by using a plan over buying the meal alone.</li>
+                        </ul>
+                    </CardBlock>
+                </Card>
             </Col>
         </section>
     );
@@ -446,7 +460,7 @@ export default class App extends React.Component {
                                 />
                         </Col>
                         <Col sm={12}>
-                            <CostValueSideBar
+                            <SideBar
                                 planData={pData}
                                 mealData={mData}/>
                         </Col>
@@ -456,25 +470,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-var mealArr = [
-    {'name':'Breakfast @ Pierce Dining Hall', 'price': 7.1690000000000005},
-    {'name':'Lunch @ Pierce Dining Hall', 'price': 9.951},
-    {'name':'Dinner @ Pierce Dining Hall', 'price': 13.268},
-    {'name':'Late Night @ Pierce Dining Hall', 'price': 9.3625},
-    {'name':'Any meal @ America\'s Cup', 'price': 10.432500000000001},
-    {'name':'Any meal @ Chop\'d & Wrap\'d', 'price': 12.1873},
-    {'name':'Any meal @ Red & Gray Cafe', 'price': 10.432500000000001},
-    {'name':'Breakfast @ Colonel John\'s - Grill Nation', 'price': 7.5435},
-    {'name':'Lunch/Dinner @ Colonel John\'s - Grill Nation', 'price': 11.737900000000002},
-    {'name':'Any meal @ Colonel John\'s - Asian Express', 'price': 11.545300000000001},
-    {'name':'Any meal @ Colonel John\'s - Personal Pizza', 'price': 7.7575}
-];
-var planArr = [
-    {'name':'Platinum', 'price': 9.38082191780822},
-    {'name':'Gold', 'price': 9.876923076923077},
-    {'name':'Silver', 'price': 12.988439306358382},
-    {'name':'80 meals', 'price': 13.04878048780488},
-    {'name':'60 meals', 'price': 13.155737704918034},
-    {'name':'25 meals', 'price': 14.98}
-];
