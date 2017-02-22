@@ -18799,7 +18799,7 @@ var ValueTable = function ValueTable(_ref8) {
                         null,
                         mealName,
                         ' ',
-                        '(' + meal.type + ')',
+                        meal.type ? '(' + meal.type + ')' : '',
                         ': ',
                         '$' + mealPrice
                     ),
