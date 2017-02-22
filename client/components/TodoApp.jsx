@@ -56,7 +56,6 @@ export class TodoApp extends React.Component{
   }
   // Lifecycle method
   componentDidMount(){
-    //
     console.log('TodoApp mounted');
   }
   // Add todo handler
