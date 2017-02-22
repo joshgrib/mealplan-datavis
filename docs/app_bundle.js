@@ -18779,7 +18779,8 @@ var ValueTable = function ValueTable(_ref8) {
                         { key: 'plan_' + i },
                         plan.name,
                         _react2.default.createElement('br', null),
-                        '$' + plan.value
+                        '$' + plan.value,
+                        '/swipe'
                     );
                 })
             )
@@ -18798,7 +18799,7 @@ var ValueTable = function ValueTable(_ref8) {
                         null,
                         mealName,
                         ' ',
-                        meal.type,
+                        '(' + meal.type + ')',
                         ': ',
                         '$' + mealPrice
                     ),

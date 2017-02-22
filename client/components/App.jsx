@@ -226,7 +226,7 @@ const ValueTable = ({planList, mealList, stateStatus}) => {
                         return (
                             <th key={`plan_${i}`}>
                                 {plan.name}<br/>
-                                {`$${plan.value}`}
+                            {`$${plan.value}`}/swipe
                             </th>
                         );
                     })}
@@ -238,7 +238,7 @@ const ValueTable = ({planList, mealList, stateStatus}) => {
                     let mealPrice = (meal.price*stateStatus.tax).toFixed(2);
                     return (
                         <tr key={`meal_${i}`}>
-                            <th>{mealName} {meal.type}: {`$${mealPrice}`}
+                            <th>{mealName} {`(${meal.type})`}: {`$${mealPrice}`}
                             </th>
                             {planList.map((plan, j) => {
                                 let swipePrice = plan.value;
