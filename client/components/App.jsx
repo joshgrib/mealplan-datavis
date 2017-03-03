@@ -21,6 +21,11 @@ const AppHeader = ({main, sub, clickFn}) => {
         </header>
     );
 }
+AppHeader.propTypes = {
+    main: React.PropTypes.string.isRequired,
+    sub: React.PropTypes.string.isRequired,
+    clickFn: React.PropTypes.func
+}
 
 const MealPlanList = ({planList}) => {
     return (

@@ -67,10 +67,10 @@ let plans = {
         }
     },
     3:{
-        "name":    "80 meals",
+        "name":    "Bronze",
         "swipes":{
             "buffet":{
-                "quantity":80,
+                "quantity":70,
                 "period":"semester",
                 "unlimited":false
             },
@@ -80,8 +80,8 @@ let plans = {
             },
             "guest":2
         },
-        "includesWSW":true,
-        "cost":1000,
+        "includesWSW":false,
+        "cost":800,
         "duckbill-options":{
             0:0,
             1:100,
@@ -89,10 +89,10 @@ let plans = {
         }
     },
     4:{
-        "name":    "60 meals",
+        "name":    "Green",
         "swipes":{
             "buffet":{
-                "quantity":60,
+                "quantity":50,
                 "period":"semester",
                 "unlimited":false
             },
@@ -102,8 +102,8 @@ let plans = {
             },
             "guest":1
         },
-        "includesWSW":true,
-        "cost":750,
+        "includesWSW":false,
+        "cost":600,
         "duckbill-options":{
             0:0,
             1:100,
@@ -111,10 +111,10 @@ let plans = {
         }
     },
     5:{
-        "name":    "25 meals",
+        "name":    "Gray",
         "swipes":{
             "buffet":{
-                "quantity":25,
+                "quantity":20,
                 "period":"semester",
                 "unlimited":false
             },
@@ -124,8 +124,8 @@ let plans = {
             },
             "guest":0
         },
-        "includesWSW":true,
-        "cost":350,
+        "includesWSW":false,
+        "cost":200,
         "duckbill-options":{
             0:0,
             1:100,
