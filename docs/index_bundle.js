@@ -18517,6 +18517,7 @@ var PlanTable = function PlanTable(_ref5) {
             'pierce': pierceCount,
             'exchanges': exchanges,
             'guests': planObj.swipes.guest,
+            'hasWSW': planObj.includesWSW,
             'cost': planObj.cost
         };
         planList.push(plan);
@@ -18528,7 +18529,7 @@ var PlanTable = function PlanTable(_ref5) {
         _react2.default.createElement(
             'p',
             null,
-            'All meal plans have Washington Street Wednesday and can include 0, 100, or 300 Duckbills.'
+            'All meal plans can include 0, 100, or 300 Duckbills.'
         ),
         _react2.default.createElement(
             _reactstrap.Table,
@@ -18558,6 +18559,11 @@ var PlanTable = function PlanTable(_ref5) {
                         'th',
                         null,
                         'Guest Swipes'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Washington St. Wed.'
                     ),
                     _react2.default.createElement(
                         'th',
@@ -18592,6 +18598,11 @@ var PlanTable = function PlanTable(_ref5) {
                             'td',
                             null,
                             plan.guests
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            plan.hasWSW ? 'Yes' : 'No'
                         ),
                         _react2.default.createElement(
                             'td',

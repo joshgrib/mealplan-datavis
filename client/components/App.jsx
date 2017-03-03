@@ -80,6 +80,7 @@ const PlanTable = ({planData}) => {
             'pierce':pierceCount,
             'exchanges':exchanges,
             'guests':planObj.swipes.guest,
+            'hasWSW':planObj.includesWSW,
             'cost':planObj.cost
         }
         planList.push(plan);
@@ -87,7 +88,7 @@ const PlanTable = ({planData}) => {
 
     return (
         <section id="mealPlanTable">
-            <p>All meal plans have Washington Street Wednesday and can include 0, 100, or 300 Duckbills.</p>
+            <p>All meal plans can include 0, 100, or 300 Duckbills.</p>
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
@@ -95,6 +96,7 @@ const PlanTable = ({planData}) => {
                         <th>Pierce Swipes</th>
                         <th>Meal Exchanges</th>
                         <th>Guest Swipes</th>
+                        <th>Washington St. Wed.</th>
                         <th>Cost</th>
                     </tr>
                 </thead>
@@ -106,6 +108,7 @@ const PlanTable = ({planData}) => {
                                 <td>{plan.pierce}</td>
                                 <td>{plan.exchanges}</td>
                                 <td>{plan.guests}</td>
+                                <td>{plan.hasWSW?'Yes':'No'}</td>
                                 <td>{plan.cost}</td>
                             </tr>
                         );
